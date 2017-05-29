@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta4.xsd"
+    id = "NeuroML2_file_exported_from_NEURON">
+
+  <notes> NeuroML 2 file generated from ModelView by: NEURON -- Release 7.4 (1370:16a7055d4a86) 2015-11-09
+          Authors: Michael Hines, Sushil Kambampati and Padraig Gleeson,
+          Yale University and UCL 
+  </notes>
+
+  <cell id="Vida06">
+    <notes>Cell: Cell0 exported from NEURON ModelView</notes>
+    <morphology id="morphology_Vida_06">
+	<segment id="0" name="Soma">
+        	<proximal x="0.0" y="0.0" z="0.0" diameter="5.6418958354775626"/>
+        	<distal x="0.0" y="0.0" z="0.0" diameter="5.6418958354775626"/>
+	</segment>
+
+	<segmentGroup id="Soma" neuroLexId="sao864921383">    <!--
+  		 This group contains an unbranched set of segments, and all of the segmentGroups marked with
+   		 neuroLexId = sao864921383 form a non-overlapping set of all of the segments. 
+   		 These segmentGroups correspond to the 'cables' of NeuroML v1.8.1. -->
+ 	 		<member segment="0"/>
+	</segmentGroup>	
+
+	<segmentGroup id="all">
+  		<include segmentGroup="Soma"/>
+	</segmentGroup>
+
+       	<segmentGroup id="soma_group" neuroLexId="GO:0043025">    <!--Soma group-->
+		<include segmentGroup="Soma"/>
+        </segmentGroup>
+    </morphology>
+  </cell> 
+</neuroml>
