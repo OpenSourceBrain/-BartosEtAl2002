@@ -1,0 +1,103 @@
+<Lems>
+
+    <!-- Example showing new types of network populations & projection templates in v2 -->
+
+    <!-- This is a file which can be read and executed by the LEMS Interpreter.
+    It imports the LEMS definitions of the core NeuroML 2 Components, creates
+    a model in "pure" NeuroML 2 and contains some LEMS elements for running
+    a simulation -->
+
+
+    <Target component="sim1"/>
+
+    <Include file="NeuroMLCoreDimensions.xml"/>
+    <Include file="Cells.xml"/>
+    <Include file="Networks.xml"/>
+    <Include file="Simulation.xml"/>
+
+    <Include file="expTwoSynapseAct.nml"/>
+
+
+    <!-- NeuroML 2 elements... -->
+
+    <spikeGenerator id="spiker" period="30ms"/>
+
+
+
+    <iafCell id="iaf1" leakReversal="-60mV" thresh="-35mV" reset="-65mV" C="1e-5uF" leakConductance="10e-7mS"/>
+
+
+
+    <expTwoSynapse id="syn2" gbase="0.5nS" erev="0mV" tauDecay="2ms" tauRise="0.05ms"/>
+    
+    <expTwoSynapseAct id="expTwoSynapseAct1" tauRise="0.05ms" tauDecay="2ms" gbase="0.5nS" erev="0V" delay="200ms" duration="500ms"/>
+    
+    <expTwoSynapseAct id="expTwoSynapseAct2" tauRise="0.05ms" tauDecay="2ms" gbase="0.5nS" erev="0V" delay="100ms" duration="150ms"/>
+    
+
+    <network id="net2">
+
+        <population id="spikersPop" component="spiker" size="1"/>
+
+
+        <population id="iafPop" component="iaf1" size="3"/>
+
+        
+        <projection id="projection0" presynapticPopulation="spikersPop" postsynapticPopulation="iafPop" synapse="syn2">
+            <connection preCellId="../spikersPop[0]" postCellId="../iafPop[0]"/>
+        </projection>
+        
+        <projection id="projection1" presynapticPopulation="spikersPop" postsynapticPopulation="iafPop" synapse="expTwoSynapseAct1">
+            <connection preCellId="../spikersPop[0]" postCellId="../iafPop[1]"/>
+        </projection>
+        
+        
+        <projection id="projection2" presynapticPopulation="spikersPop" postsynapticPopulation="iafPop" synapse="expTwoSynapseAct2">
+            <connection preCellId="../spikersPop[0]" postCellId="../iafPop[2]"/>
+        </projection>
+        
+        
+
+    </network>
+
+    <!-- End of NeuroML 2 elements... -->
+
+
+
+    <Simulation id="sim1" length="1000ms" step="0.05ms" target="net2">
+
+        <Display id="d1" title="Spiking elements" timeScale="1ms" xmin="-100" xmax="1100" ymin="-5" ymax="105">
+            <Line id="30ms period spiker" quantity="spikersPop[0]/tsince" scale="1ms" color="#000000" timeScale="1ms"/>
+        </Display>
+
+
+
+        <Display id="d4" title="Syns" timeScale="1ms" xmin="-100" xmax="1100" ymin="-62" ymax="-55">
+            <Line id="Standard syn" quantity="iafPop[0]/v" scale="1mV" color="#000000" timeScale="1ms"/>
+        </Display>
+
+        <Display id="d5" title="Syns transient 1" timeScale="1ms" xmin="-100" xmax="1100" ymin="-62" ymax="-55">
+            <Line id="Transient syn 1" quantity="iafPop[1]/v" scale="1mV" color="#000000" timeScale="1ms"/>
+        </Display>
+        
+        <Display id="d6" title="Syns transient 2" timeScale="1ms" xmin="-100" xmax="1100" ymin="-62" ymax="-55">
+            <Line id="Transient syn 2" quantity="iafPop[2]/v" scale="1mV" color="#000000" timeScale="1ms"/>
+        </Display>
+        
+        <!--
+        <OutputFile id="of0" fileName="results/ex12.dat">
+            <OutputColumn id="0" quantity="iafPop[0]/v" />
+            <OutputColumn id="1" quantity="iafPop[1]/v" />
+            <OutputColumn id="2" quantity="iafPop[2]/v" />
+            <OutputColumn id="3" quantity="iafPop[3]/v" />
+            <OutputColumn id="4" quantity="iafPop[4]/v" />
+            <OutputColumn id="5" quantity="iafPop[5]/v" />
+            <OutputColumn id="6" quantity="iafPop[6]/v" />
+            <OutputColumn id="7" quantity="iafPop[7]/v" />
+            <OutputColumn id="8" quantity="iafPop[8]/v" />
+        </OutputFile>-->
+
+    </Simulation>
+
+
+</Lems>
